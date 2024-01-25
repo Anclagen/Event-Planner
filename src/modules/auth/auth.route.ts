@@ -1,15 +1,8 @@
-import { FastifyInstance } from "fastify"
-import { createResponseSchema } from "@noroff/api-utils"
+import { FastifyInstance } from "fastify";
+import { createResponseSchema } from "@/noroff-api-utils";
 
-import { createApiKeyHandler, loginHandler, registerProfileHandler } from "./auth.controller"
-import {
-  createApiKeyResponseSchema,
-  createApiKeySchema,
-  createProfileBodySchema,
-  createProfileResponseSchema,
-  loginBodySchema,
-  loginResponseSchema
-} from "./auth.schema"
+import { createApiKeyHandler, loginHandler, registerProfileHandler } from "./auth.controller";
+import { createApiKeyResponseSchema, createApiKeySchema, createProfileBodySchema, createProfileResponseSchema, loginBodySchema, loginResponseSchema } from "./auth.schema";
 
 async function authRoutes(server: FastifyInstance) {
   server.post(
@@ -19,12 +12,12 @@ async function authRoutes(server: FastifyInstance) {
         tags: ["auth"],
         body: createProfileBodySchema,
         response: {
-          201: createResponseSchema(createProfileResponseSchema)
-        }
-      }
+          201: createResponseSchema(createProfileResponseSchema),
+        },
+      },
     },
     registerProfileHandler
-  )
+  );
 
   server.post(
     "/login",
@@ -33,12 +26,12 @@ async function authRoutes(server: FastifyInstance) {
         tags: ["auth"],
         body: loginBodySchema,
         response: {
-          200: createResponseSchema(loginResponseSchema)
-        }
-      }
+          200: createResponseSchema(loginResponseSchema),
+        },
+      },
     },
     loginHandler
-  )
+  );
 
   server.post(
     "/create-api-key",
@@ -48,12 +41,12 @@ async function authRoutes(server: FastifyInstance) {
         tags: ["auth"],
         body: createApiKeySchema,
         response: {
-          201: createResponseSchema(createApiKeyResponseSchema)
-        }
-      }
+          201: createResponseSchema(createApiKeyResponseSchema),
+        },
+      },
     },
     createApiKeyHandler
-  )
+  );
 }
 
-export default authRoutes
+export default authRoutes;

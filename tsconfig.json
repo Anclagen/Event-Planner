@@ -9,12 +9,14 @@
     "resolveJsonModule": true,
     "sourceMap": true,
     "outDir": "dist",
-    "baseUrl": "src",
+    "baseUrl": ".",
     "strict": true,
     "skipLibCheck": true,
     "types": ["@types/jest"],
     "paths": {
-      "@/*": ["./*"]
+      "@/noroff-api-utils/*": ["src/noroff-api-utils/*"],
+      "@/utils/*": ["src/utils/*"],
+      "@/*": ["src/*"]
     }
   },
   "ts-node": {

@@ -1,12 +1,7 @@
-import { FastifyInstance } from "fastify"
-import { createResponseSchema } from "@noroff/api-utils"
+import { FastifyInstance } from "fastify";
+import { createResponseSchema } from "@/noroff-api-utils";
 
-import {
-  listingQuerySchema,
-  listingResponseSchema,
-  listingWinsQuerySchema,
-  profileBidsResponseSchema
-} from "../listings/listings.schema"
+import { listingQuerySchema, listingResponseSchema, listingWinsQuerySchema, profileBidsResponseSchema } from "../listings/listings.schema";
 import {
   getProfileBidsHandler,
   getProfileCreditsHandler,
@@ -15,17 +10,9 @@ import {
   getProfilesHandler,
   getProfileWinsHandler,
   searchProfilesHandler,
-  updateProfileHandler
-} from "./profiles.controller"
-import {
-  displayProfileSchema,
-  profileCreditsSchema,
-  profileNameSchema,
-  profilesQuerySchema,
-  queryFlagsSchema,
-  searchQuerySchema,
-  updateProfileSchema
-} from "./profiles.schema"
+  updateProfileHandler,
+} from "./profiles.controller";
+import { displayProfileSchema, profileCreditsSchema, profileNameSchema, profilesQuerySchema, queryFlagsSchema, searchQuerySchema, updateProfileSchema } from "./profiles.schema";
 
 async function profilesRoutes(server: FastifyInstance) {
   server.get(
@@ -37,12 +24,12 @@ async function profilesRoutes(server: FastifyInstance) {
         security: [{ bearerAuth: [] }],
         querystring: profilesQuerySchema,
         response: {
-          200: createResponseSchema(displayProfileSchema.array())
-        }
-      }
+          200: createResponseSchema(displayProfileSchema.array()),
+        },
+      },
     },
     getProfilesHandler
-  )
+  );
 
   server.get(
     "/:name",
@@ -54,12 +41,12 @@ async function profilesRoutes(server: FastifyInstance) {
         querystring: queryFlagsSchema,
         params: profileNameSchema,
         response: {
-          200: createResponseSchema(displayProfileSchema)
-        }
-      }
+          200: createResponseSchema(displayProfileSchema),
+        },
+      },
     },
     getProfileHandler
-  )
+  );
 
   server.get(
     "/search",
@@ -69,12 +56,12 @@ async function profilesRoutes(server: FastifyInstance) {
         tags: ["auction-profiles"],
         querystring: searchQuerySchema,
         response: {
-          200: createResponseSchema(displayProfileSchema.array())
-        }
-      }
+          200: createResponseSchema(displayProfileSchema.array()),
+        },
+      },
     },
     searchProfilesHandler
-  )
+  );
 
   server.put(
     "/:name",
@@ -86,12 +73,12 @@ async function profilesRoutes(server: FastifyInstance) {
         params: profileNameSchema,
         body: updateProfileSchema,
         response: {
-          200: createResponseSchema(displayProfileSchema.omit({ listings: true }))
-        }
-      }
+          200: createResponseSchema(displayProfileSchema.omit({ listings: true })),
+        },
+      },
     },
     updateProfileHandler
-  )
+  );
 
   server.get(
     "/:name/listings",
@@ -103,12 +90,12 @@ async function profilesRoutes(server: FastifyInstance) {
         querystring: listingQuerySchema,
         params: profileNameSchema,
         response: {
-          200: createResponseSchema(listingResponseSchema.array())
-        }
-      }
+          200: createResponseSchema(listingResponseSchema.array()),
+        },
+      },
     },
     getProfileListingsHandler
-  )
+  );
 
   server.get(
     "/:name/bids",
@@ -120,12 +107,12 @@ async function profilesRoutes(server: FastifyInstance) {
         querystring: profilesQuerySchema,
         params: profileNameSchema,
         response: {
-          200: createResponseSchema(profileBidsResponseSchema.array())
-        }
-      }
+          200: createResponseSchema(profileBidsResponseSchema.array()),
+        },
+      },
     },
     getProfileBidsHandler
-  )
+  );
 
   server.get(
     "/:name/wins",
@@ -137,12 +124,12 @@ async function profilesRoutes(server: FastifyInstance) {
         querystring: listingWinsQuerySchema,
         params: profileNameSchema,
         response: {
-          200: createResponseSchema(listingResponseSchema.array())
-        }
-      }
+          200: createResponseSchema(listingResponseSchema.array()),
+        },
+      },
     },
     getProfileWinsHandler
-  )
+  );
 
   server.get(
     "/:name/credits",
@@ -153,12 +140,12 @@ async function profilesRoutes(server: FastifyInstance) {
         security: [{ bearerAuth: [] }],
         params: profileNameSchema,
         response: {
-          200: createResponseSchema(profileCreditsSchema)
-        }
-      }
+          200: createResponseSchema(profileCreditsSchema),
+        },
+      },
     },
     getProfileCreditsHandler
-  )
+  );
 }
 
-export default profilesRoutes
+export default profilesRoutes;

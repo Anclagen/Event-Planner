@@ -1,25 +1,8 @@
-import { FastifyInstance } from "fastify"
-import { createResponseSchema } from "@noroff/api-utils"
+import { FastifyInstance } from "fastify";
+import { createResponseSchema } from "@/noroff-api-utils";
 
-import {
-  createListingBidHandler,
-  createListingHandler,
-  deleteListingHandler,
-  getListingHandler,
-  getListingsHandler,
-  searchListingsHandler,
-  updateListingHandler
-} from "./listings.controller"
-import {
-  bidBodySchema,
-  createListingSchema,
-  listingIdParamsSchema,
-  listingQuerySchema,
-  listingResponseSchema,
-  queryFlagsSchema,
-  searchQuerySchema,
-  updateListingSchema
-} from "./listings.schema"
+import { createListingBidHandler, createListingHandler, deleteListingHandler, getListingHandler, getListingsHandler, searchListingsHandler, updateListingHandler } from "./listings.controller";
+import { bidBodySchema, createListingSchema, listingIdParamsSchema, listingQuerySchema, listingResponseSchema, queryFlagsSchema, searchQuerySchema, updateListingSchema } from "./listings.schema";
 
 async function listingsRoutes(server: FastifyInstance) {
   server.get(
@@ -29,12 +12,12 @@ async function listingsRoutes(server: FastifyInstance) {
         tags: ["auction-listings"],
         querystring: listingQuerySchema,
         response: {
-          200: createResponseSchema(listingResponseSchema.array())
-        }
-      }
+          200: createResponseSchema(listingResponseSchema.array()),
+        },
+      },
     },
     getListingsHandler
-  )
+  );
 
   server.get(
     "/:id",
@@ -44,12 +27,12 @@ async function listingsRoutes(server: FastifyInstance) {
         querystring: queryFlagsSchema,
         params: listingIdParamsSchema,
         response: {
-          200: createResponseSchema(listingResponseSchema)
-        }
-      }
+          200: createResponseSchema(listingResponseSchema),
+        },
+      },
     },
     getListingHandler
-  )
+  );
 
   server.get(
     "/search",
@@ -58,12 +41,12 @@ async function listingsRoutes(server: FastifyInstance) {
         tags: ["auction-listings"],
         querystring: searchQuerySchema,
         response: {
-          200: createResponseSchema(listingResponseSchema.array())
-        }
-      }
+          200: createResponseSchema(listingResponseSchema.array()),
+        },
+      },
     },
     searchListingsHandler
-  )
+  );
 
   server.post(
     "/",
@@ -74,12 +57,12 @@ async function listingsRoutes(server: FastifyInstance) {
         security: [{ bearerAuth: [] }],
         body: createListingSchema,
         response: {
-          201: createResponseSchema(listingResponseSchema)
-        }
-      }
+          201: createResponseSchema(listingResponseSchema),
+        },
+      },
     },
     createListingHandler
-  )
+  );
 
   server.put(
     "/:id",
@@ -92,12 +75,12 @@ async function listingsRoutes(server: FastifyInstance) {
         querystring: queryFlagsSchema,
         params: listingIdParamsSchema,
         response: {
-          200: createResponseSchema(listingResponseSchema)
-        }
-      }
+          200: createResponseSchema(listingResponseSchema),
+        },
+      },
     },
     updateListingHandler
-  )
+  );
 
   server.delete(
     "/:id",
@@ -106,11 +89,11 @@ async function listingsRoutes(server: FastifyInstance) {
       schema: {
         tags: ["auction-listings"],
         security: [{ bearerAuth: [] }],
-        params: listingIdParamsSchema
-      }
+        params: listingIdParamsSchema,
+      },
     },
     deleteListingHandler
-  )
+  );
 
   server.post(
     "/:id/bids",
@@ -123,12 +106,12 @@ async function listingsRoutes(server: FastifyInstance) {
         querystring: queryFlagsSchema,
         body: bidBodySchema,
         response: {
-          201: createResponseSchema(listingResponseSchema)
-        }
-      }
+          201: createResponseSchema(listingResponseSchema),
+        },
+      },
     },
     createListingBidHandler
-  )
+  );
 }
 
-export default listingsRoutes
+export default listingsRoutes;
